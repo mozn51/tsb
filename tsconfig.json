@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "baseUrl": ".",
+      "paths": {
+        "*": ["node_modules/*"]
+      },
+      "types": [
+        "node",
+        "@wdio/globals/types",
+        "expect-webdriverio",
+        "@wdio/jasmine-framework",
+        "@wdio/visual-service",
+        "jasmine",
+        "jquery",  
+    ],
+    }
+  }
+  
