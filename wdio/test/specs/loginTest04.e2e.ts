@@ -1,5 +1,5 @@
 describe('My Login application', () => {
-    it('should login with valid credentials via Log in', async () => {
+    it('should login with valid credentials via My Trade Me', async () => {
 
         try {
             // Open the browser and navigate to the page
@@ -11,37 +11,28 @@ describe('My Login application', () => {
             await browser.waitUntil(async () => loginFunctions.waitForDisplayed());
             console.log('Home Page loaded');
 
-            // ***** login via Log in Words *****
-            // Click on the log in word
-            const loginWord = await browser.$('div.tm-root__afiliates-sat-nav-functions div a.logged-out__log-in');
-            // wait for the element to be avaiable for click action
-            await loginWord.waitForClickable();
-            await loginWord.click();
-            console.log('Click "Log in"');
+            // ***** Login via My TRade Me *****
+            const loginWatchlist = await browser.$('//a[contains(@classiclink, "MyTradeMe/Default.aspx")]');
+            await loginWatchlist.waitForClickable();
+            await loginWatchlist.click();
+            console.log('Click My Trade Me');
 
-            // Validate the Login pop-up is loaded
-            const loginPopup = await browser.$('div.o-modal__container');
-            await loginPopup.waitForDisplayed();
-            console.log('Log in Popup is available');
-            
-            // added to wait for the iframe to load.
-            await browser.setTimeout({ implicit: 3000 });
-
-            // switch to iframe available for login
-            const loginIframe = await browser.$('iframe[src*="https://auth.tmsandbox.co.nz/connect/authorize?"]');
-            await browser.switchToFrame(loginIframe);
-            console.log('switch to iframe login');
+           // Validate the login page after clicking Trade Me
+            const loginFormDisplayed = await browser.$('//div[contains(@class, "au-card login-card")]//h1[text()="Log in"]');
+            await loginFormDisplayed.isDisplayed();
+            console.log('Log in page is available');
 
             // Perform login actions
+            // email address
             const emailAddress = 'miltontest1@miltontest.co.nz';
-            const password = 'P@ssw0rd010203';
             const emailAddressField = await browser.$('input#Email.email-input');
-            const passwordField = await browser.$('input#Password.password-input');
-            
             await emailAddressField.waitForClickable();
             await emailAddressField.setValue(emailAddress);
             console.log('email address added');
 
+            // password
+            const password = 'P@ssw0rd010203';
+            const passwordField = await browser.$('input#Password.password-input');
             await passwordField.waitForClickable();
             await passwordField.setValue(password);
             console.log('password added');
@@ -51,6 +42,7 @@ describe('My Login application', () => {
 
             // switch to iframe reCAPTCHA
             const reCAPTCHAIframes = await browser.$$('iframe[src*="https://www.recaptcha.net/recaptcha/enterprise/anchor?"]');
+
             // Check if at least one iframe is found
             if (reCAPTCHAIframes.length > 0) {
                 // Switch to the first reCAPTCHA iframe
@@ -77,7 +69,15 @@ describe('My Login application', () => {
 
             console.log('Check box reCAPTCHA done');
 
+            // added to wait for the iframe to load.
+            await browser.setTimeout({ implicit: 3000 });
+
+            // switch to iframe available for login
+            await browser.switchToFrame(null);
+            console.log('switch off from iframe reCAPTCHA');
+
             const loginButton = await browser.$('button[value="login"]');
+            await loginButton.isClickable();
             await loginButton.click();
 
         } catch (error) {

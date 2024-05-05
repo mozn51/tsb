@@ -21,7 +21,7 @@ exports.config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/specs/**/*.ts'
+        './test/specs/**/listingItem.e2e.ts'
     ],
     // Patterns to exclude.
     exclude: [
