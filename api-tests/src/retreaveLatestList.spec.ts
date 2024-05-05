@@ -12,6 +12,6 @@ describe('GET /v1/Listings/Latest.json', () => {
     it('returns at least one item', async () => {
         const response = await apiInstance.get(path)
 
-        expect(response.data.List.length).toBeGreaterThan(0)
+        expect(response.data.List.length).toBeGreaterThan(0);
     })
 })

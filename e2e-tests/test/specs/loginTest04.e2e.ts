@@ -7,7 +7,7 @@ describe('My Login application', () => {
             await browser.url('https://www.tmsandbox.co.nz/');
 
             // Validate the page is loaded
-            const  loginFunctions = await browser.$('div.tm-root__afiliates-sat-nav-functions');
+            const loginFunctions = await browser.$('div.tm-root__afiliates-sat-nav-functions');
             await browser.waitUntil(async () => loginFunctions.waitForDisplayed());
             console.log('Home Page loaded');
 
@@ -17,7 +17,7 @@ describe('My Login application', () => {
             await loginWatchlist.click();
             console.log('Click My Trade Me');
 
-           // Validate the login page after clicking Trade Me
+            // Validate the login page after clicking Trade Me
             const loginFormDisplayed = await browser.$('//div[contains(@class, "au-card login-card")]//h1[text()="Log in"]');
             await loginFormDisplayed.isDisplayed();
             console.log('Log in page is available');
@@ -50,11 +50,11 @@ describe('My Login application', () => {
                 console.log('switch to iframe reCAPTCHA');
             } else {
                 console.error('No iframe matching the specified source attribute found.');
-            }            
+            }
 
             // Wait for reCAPTCHA checkbox to be clickable and click it
             await browser.waitUntil(async () => {
-                try{
+                try {
                     const checkBoxRecaptcha = await browser.$('div.recaptcha-checkbox-checkmark');
                     if (checkBoxRecaptcha && await checkBoxRecaptcha.isExisting() && await checkBoxRecaptcha.isDisplayed() && await checkBoxRecaptcha.isClickable()) {
                         await checkBoxRecaptcha.click();
@@ -65,7 +65,7 @@ describe('My Login application', () => {
                     console.error("Error while waiting for reCAPTCHA checkbox:", error);
                 }
                 return false;
-            }, { timeout: 20000, timeoutMsg: 'reCAPTCHA checkbox not clickable' });    
+            }, { timeout: 20000, timeoutMsg: 'reCAPTCHA checkbox not clickable' });
 
             console.log('Check box reCAPTCHA done');
 

@@ -9,7 +9,7 @@ describe('My Login application', () => {
             await browser.url('https://www.tmsandbox.co.nz/');
 
             // Validate the page is loaded
-            const  loginFunctions = await browser.$('div.tm-root__afiliates-sat-nav-functions');
+            const loginFunctions = await browser.$('div.tm-root__afiliates-sat-nav-functions');
             await browser.waitUntil(async () => loginFunctions.waitForDisplayed());
             console.log('Home Page loaded');
 
@@ -25,7 +25,7 @@ describe('My Login application', () => {
             const loginPopup = await browser.$('div.o-modal__container');
             await loginPopup.waitForDisplayed();
             console.log('Log in Popup is available');
-            
+
             // added to wait for the iframe to load.
             await browser.setTimeout({ implicit: 3000 });
 
@@ -35,18 +35,19 @@ describe('My Login application', () => {
             console.log('switch to iframe login');
 
             // Perform login actions
-            const emailAddress = 'miltontest1@miltontest.co.nz';
-            const password = 'P@ssw0rd010203';
+            const trademeEmailAddress = process.env.TRADEME_CONSUMER_EMAIL!;
+            const trademePassword = process.env.TRADEME_CONSUMER_PASSWORD!;
+
             const emailAddressField = await browser.$('input#Email.email-input');
             const passwordField = await browser.$('input#Password.password-input');
-            
+
             await emailAddressField.waitForClickable();
-            await emailAddressField.setValue(emailAddress);
-            console.log('email address added');
+            await emailAddressField.setValue(trademeEmailAddress);
+            console.log('trademe email address added');
 
             await passwordField.waitForClickable();
-            await passwordField.setValue(password);
-            console.log('password added');
+            await passwordField.setValue(trademePassword);
+            console.log('trademe password added');
 
             // added to wait for the iframe to load.
             await browser.setTimeout({ implicit: 3000 });
@@ -63,29 +64,12 @@ describe('My Login application', () => {
                 console.error('No iframe matching the specified source attribute found.');
                 // clica no login.
 
-        
-            }        
+
+            }
 
             //validar a proxima pagina
-            
-            
-            // tirar e explicar o motivo q tirei o recaptcha.
-            // Wait for reCAPTCHA checkbox to be clickable and click it
-            // await browser.waitUntil(async () => {
-            //     try{
-            //         const checkBoxRecaptcha = await browser.$('div.recaptcha-checkbox-checkmark');
-            //         if (checkBoxRecaptcha && await checkBoxRecaptcha.isExisting() && await checkBoxRecaptcha.isDisplayed() && await checkBoxRecaptcha.isClickable()) {
-            //             await checkBoxRecaptcha.click();
-            //             return true;
-            //         }
-            //     }
-            //     catch (error) {
-            //         console.error("Error while waiting for reCAPTCHA checkbox:", error);
-            //     }
-            //     return false;
-            // }, { timeout: 20000, timeoutMsg: 'reCAPTCHA checkbox not clickable' });    
 
-            // console.log('Check box reCAPTCHA done');
+
 
             const loginButton = await browser.$('button[value="login"]');
             await loginButton.click();

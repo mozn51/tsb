@@ -9,10 +9,7 @@ const oauth = new OAuth({
     key: process.env.TRADEME_CONSUMER_KEY!,
     secret: process.env.TRADEME_CONSUMER_SECRET!,
   },
-  signature_method: 'PLAINTEXT',
-  hash_function(base_string, key) {
-    return key;
-  },
+  signature_method: 'PLAINTEXT'
 });
 
 export function generateOAuthHeader(url: string, method: string)  {
