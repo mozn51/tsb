@@ -217,19 +217,19 @@ describe('My Listing Application', () => {
         if (actionDetailsTitleValue === newListingItemTitle) {
             await log(`action details title matches '${newListingItemTitle}'`);
         } else {
-            await log.error(`Expected action details title to be '${newListingItemTitle}', but found '${actionDetailsTitleValue}'`);
+            await log(`Expected action details title to be '${newListingItemTitle}', but found '${actionDetailsTitleValue}'`, true);
         }
 
         if (actionDetailDescriptionValue === newListingItemDescription) {
             await log(`action detail description matches '${newListingItemDescription}'`);
         } else {
-            await log.error(`Expected action detail description to be '${newListingItemDescription}', but found '${actionDetailDescriptionValue}'`);
+            await log(`Expected action detail description to be '${newListingItemDescription}', but found '${actionDetailDescriptionValue}'`, true);
         }
 
         if (actionDetailStartPriceValue.includes(newListingItemStartPrice)) {
             await log(`action detail start price contains '${newListingItemStartPrice}'`);
         } else {
-            await log.error(`Expected action detail start price to contain '${newListingItemStartPrice}', but found '${actionDetailStartPriceValue}'`);
+            await log(`Expected action detail start price to contain '${newListingItemStartPrice}', but found '${actionDetailStartPriceValue}'`, true);
         }
 
         await log('compared values used during the process in the Action page');

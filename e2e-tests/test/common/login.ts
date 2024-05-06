@@ -3,21 +3,21 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-export async function login(trademeEmailAddress: string, trademePassword: string
-) {
+export async function login(trademeEmailAddress: string, trademePassword: string) {
+    // to check if the user is already logged in
     if (await isLoggedIn()) {
         await log('User already logged in');
         return;
     }
 
-    // Open the browser and navigate to home page
+    // open the browser and navigate to login page
     await log("Opening Login page");
     const baseUrl = process.env.TRADEME_BASE_URL!;
     const loginUrl = `${baseUrl}a/login`;
     await browser.url(loginUrl);
-    
+
     const loginFormDisplayed = await browser.$('//div[contains(@class, "au-card login-card")]//h1[text()="Log in"]');
-    await loginFormDisplayed.isDisplayed();
+    await loginFormDisplayed.waitForDisplayed();
     await log('Log in page is available');
 
     // added to wait for the iframe to load.
@@ -28,7 +28,7 @@ export async function login(trademeEmailAddress: string, trademePassword: string
     await browser.switchToFrame(loginIframe);
     await log('switched to iframe login');
 
-    // Perform login actions
+    // perform login actions
     const emailAddressField = await browser.$("input#Email.email-input");
     const passwordField = await browser.$("input#Password.password-input");
 
@@ -46,7 +46,7 @@ export async function login(trademeEmailAddress: string, trademePassword: string
     // Human interaction to complete reCaptcha steps and click Login button.
     await log('========== Human interaction - Please complete reCaptcha and click Login button ==========');
 
-    //added timeout for the human interaction.
+    // added timeout for the human interaction.
     const logoutBtn = await browser.$('//a[text()=" Log out "]');
     await logoutBtn.waitForExist({ timeout: 40000 });
     await log('Success login');
