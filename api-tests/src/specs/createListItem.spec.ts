@@ -28,7 +28,6 @@ describe('API - Testing - POST /v1/Selling.json', () => {
 
             // POST request
             const response = await apiInstance.post(path, payload);
-
             expect(response.status).toBe(200);
 
         } catch (error) {

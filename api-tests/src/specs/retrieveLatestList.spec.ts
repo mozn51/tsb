@@ -16,7 +16,7 @@ describe('API - Testing - GET /v1/Listings/Latest.json', () => {
   });
 });
 
-describe('API - Testing - GET /v1/OtherEndpoint', () => {
+describe('API - Testing - GET /Listings/{listingId}.xml', () => {
   let apiInstance: AxiosInstance;
   const otherPath = "v1/Listings/2149608770.xml";
 
