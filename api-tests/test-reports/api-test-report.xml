@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="6.965">
+  <testsuite name="API - Testing - POST /v1/Selling.json" errors="0" failures="0" skipped="0" timestamp="2024-05-07T07:09:40" time="5.88" tests="1">
+    <testcase classname="API - Testing - POST /v1/Selling.json Creates a new listing item under selling methods" name="API - Testing - POST /v1/Selling.json Creates a new listing item under selling methods" time="0.535">
+    </testcase>
+  </testsuite>
+  <testsuite name="API - Testing - GET /v1/Listings/Latest.json" errors="0" failures="0" skipped="0" timestamp="2024-05-07T07:09:40" time="6.025" tests="2">
+    <testcase classname="API - Testing - GET /v1/Listings/Latest.json Returns at least one item from latest listing under listing methods" name="API - Testing - GET /v1/Listings/Latest.json Returns at least one item from latest listing under listing methods" time="0.576">
+    </testcase>
+    <testcase classname="API - Testing - GET /v1/OtherEndpoint Validate if the item created is showing on the latest report" name="API - Testing - GET /v1/OtherEndpoint Validate if the item created is showing on the latest report" time="0.088">
+    </testcase>
+  </testsuite>
+</testsuites>

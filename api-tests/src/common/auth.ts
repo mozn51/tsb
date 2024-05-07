@@ -12,6 +12,31 @@ const oauth = new OAuth({
   signature_method: 'PLAINTEXT'
 });
 
+export function authAxiosInstance(path: string, method: string): AxiosInstance {
+    const baseUrl = process.env.TRADEME_BASE_URL!
+    const authorisationUrl = `${baseUrl}${path}`
+    const authHeader = generateOAuthHeader(authorisationUrl, method);
+
+    // Log the authorization header to confirm it's generated correctly
+    //console.log('Authorization Header:', authHeader);
+
+    // Check if the Authorization header is defined
+    const headers = authHeader.Authorization ? { Authorization: authHeader.Authorization } : {};
+
+    //console.log("Base URL:", baseUrl);
+    //console.log("Authorisation URL:", authorisationUrl);
+
+    return axios.create({
+      baseURL: baseUrl,
+      headers: {
+          Authorization: generateOAuthHeader(
+              authorisationUrl,
+              method,
+          ).Authorization,
+      },
+  });
+}
+
 export function generateOAuthHeader(url: string, method: string)  {
   const authHeader = oauth.toHeader(
     oauth.authorize(
@@ -27,18 +52,4 @@ export function generateOAuthHeader(url: string, method: string)  {
   );
 
   return authHeader;
-}
-
-export function authAxiosInstance(path: string, method: string): AxiosInstance {
-    const baseUrl = process.env.TRADEME_BASE_URL!
-    const authorisationUrl = `${baseUrl}${path}`
-    return axios.create({
-        baseURL: baseUrl,
-        headers: {
-          Authorization: generateOAuthHeader(
-            authorisationUrl,
-            method,
-          ).Authorization,
-        },
-      });
 }
