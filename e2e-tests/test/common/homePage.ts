@@ -1,7 +1,4 @@
 import { log } from "../common/logger";
-import * as dotenv from "dotenv";
-
-dotenv.config();
 
 /**
 * Opening Home page
@@ -11,7 +8,7 @@ export async function homePage(homePageUrl: string) {
 
     // Open the browser and navigate to the page
     await browser.url(homePageUrl);
-    log('Openining Home Page');
+    log('Open Home Page');
 
     // Validate the Register and Log in is available
     const loginContainer = await browser.$('div.tm-root__afiliates-sat-nav-functions');

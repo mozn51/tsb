@@ -1,6 +1,7 @@
-import { login } from "../common/login";
+import { login, logout } from "../common/loginUtils";
 import { log } from "../common/logger";
 import * as dotenv from 'dotenv';
+import { homePage } from "../common/homePage";
 
 dotenv.config();
 
@@ -8,9 +9,15 @@ describe('My Listing Application', () => {
 
     const trademeEmailAddress = process.env.TRADEME_CONSUMER_EMAIL!;
     const trademePassword = process.env.TRADEME_CONSUMER_PASSWORD!;
+    const homePageUrl = process.env.TRADEME_BASE_URL!;
 
     beforeEach(async () => {
+        await homePage(homePageUrl);
         await login(trademeEmailAddress, trademePassword);
+    })
+
+    afterEach(async () => {
+        await logout();
     })
 
     it('Start a Listing under General', async () => {
@@ -65,8 +72,7 @@ describe('My Listing Application', () => {
         const chooseCategoryVisibleElement = $('//tg-media-block-content[text()=" Flatmates wanted "]');
         await chooseCategoryVisibleElement.waitForDisplayed();
         await (await chooseCategoryVisibleElement).scrollIntoView();
-        await log('scroll page using Flatmates wanted');
-
+        
         // select mobile phones from the choose category list
         const chooseCategoryMobilePhones = await browser.$('//div //tg-media-block-content[text()=" Mobile phones "]');
         await chooseCategoryMobilePhones.waitForClickable();
@@ -76,8 +82,7 @@ describe('My Listing Application', () => {
         // wait to display mobile phones section
         const mobilePhonesCategoryBtn = await browser.$('//tg-rack-item-primary //div[text()=" Mobile phones "]');
         await mobilePhonesCategoryBtn.waitForDisplayed();
-        await log('mobile phones button is visible');
-
+        
         // select mobile phones under mobile phones section
         const mobilePhonesCategoryOptions = await browser.$('//div[@class="sub-categories"] //tg-media-block-content[text()=" Mobile phones "]');
         await mobilePhonesCategoryOptions.waitForClickable();
@@ -93,19 +98,17 @@ describe('My Listing Application', () => {
         const mobilePhonesTypeIphone = await browser.$('//tg-media-block-content[text()=" iPhone "]');
         await mobilePhonesTypeIphone.waitForClickable();
         await mobilePhonesTypeIphone.click();
-        await log('selecting iPhone types');
+        await log('selected iPhone types');
 
         // wait to display the iPhone section
         const mobilePhonesIPhoneSection = await browser.$('//div[@class="o-rack-item__primary-body"][text()=" iPhone "]');
         await mobilePhonesIPhoneSection.waitForDisplayed();
-        await log('iPhone section is available');
-
+        
         // Find an element that is visible and can be scrolled to Mobile phones
         const chooseIPhoneCategoryVisibleElement = $('//tg-media-block-content[text()=" iPhone 4 "]');
         await chooseIPhoneCategoryVisibleElement.waitForDisplayed();
         await (await chooseIPhoneCategoryVisibleElement).scrollIntoView();
-        await log('scroll page using iPhone 4');
-
+        
         // select iPhone 7 from the list
         const chooseIPhoneFromTheList = $('//tg-media-block-content[text()=" iPhone 7 "]');
         await chooseIPhoneFromTheList.waitForClickable();
@@ -126,8 +129,7 @@ describe('My Listing Application', () => {
         // validate the tab item details is available
         const itemDetailsTab = await browser.$('//button[@aria-expanded="true"] //span[text()=" Item details "]');
         await itemDetailsTab.waitForDisplayed();
-        await log('tab "Item details" is visible');
-
+        
         // adding description details for the item
         const itemDetailsDescriptionField = await browser.$('//textarea[@name="description"]');
         const newListingItemDescription = "iPhone 7, 128GB, colour Black";
@@ -144,8 +146,7 @@ describe('My Listing Application', () => {
         // validate the tab Photos is available
         const photosTab = await browser.$('//button[@aria-expanded="true"] //span[text()=" Photos "]');
         await photosTab.waitForDisplayed();
-        await log('tab photo is visible');
-
+        
         // click Next
         await nextBtn.waitForClickable();
         await nextBtn.click();
@@ -154,8 +155,7 @@ describe('My Listing Application', () => {
         // validate the tab price & payment is available
         const pricePaymentTab = await browser.$('//button[@aria-expanded="true"] //span[text()=" Price & payment "]');
         await pricePaymentTab.waitForDisplayed();
-        await log('tab price & payment is visible');
-
+        
         // add price (madantory field)
         const startPriceField = await browser.$('//span //input[@name="startPrice"]');
         const newListingItemStartPrice = "1";
@@ -171,8 +171,7 @@ describe('My Listing Application', () => {
         // validate the tab shipping & pick-up is available
         const shippingPickupTab = await browser.$('//button[@aria-expanded="true"] //span[text()=" Shipping & pick-up "]');
         await shippingPickupTab.waitForDisplayed();
-        await log('tab shipping & pick-up is visible');
-
+        
         // validate if the select pick-up options is available
         const selectPickupOption = await browser.$('//label[text()=" Select a pick-up option "]');
         await selectPickupOption.waitForDisplayed();
@@ -182,7 +181,7 @@ describe('My Listing Application', () => {
         const selectMustPickupRadioBtn = await browser.$('//tg-radio-item[@label="Must pick-up"]');
         await selectMustPickupRadioBtn.waitForClickable();
         await selectMustPickupRadioBtn.click();
-        await log('select pick-up option');
+        await log('selected pick-up option');
 
         // click Next
         await nextBtn.waitForClickable();
@@ -192,8 +191,7 @@ describe('My Listing Application', () => {
         // validate the tab promote is available
         const promoteTab = await browser.$('//button[@aria-expanded="true"] //span[text()=" Promote "]');
         await promoteTab.waitForDisplayed();
-        await log('tab promote is visible');
-
+        
         // click Start listing
         const startListingBtn = await browser.$('//button[@type="submit"] //span[text()=" Start listing "]');
         await startListingBtn.waitForClickable();
@@ -203,8 +201,7 @@ describe('My Listing Application', () => {
         // validate the aution details page
         const auctionDetail = await browser.$('//section //tg-box //h2[text()=" Auction detail "]');
         await auctionDetail.waitForDisplayed();
-        await log('auction page is visible');
-
+        
         // validate the values added during the listing testing
         const actionDetailStartPriceElement = await browser.$('//tg-rack-item-primary[.=" Start price "]/following-sibling::tg-rack-item-secondary');
         const actionDetailStartPriceValue = await actionDetailStartPriceElement.getText();
